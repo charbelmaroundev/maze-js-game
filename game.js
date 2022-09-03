@@ -16,7 +16,9 @@ onload = (event) => {
         on = true
         eventListener = true
         console.log(on);
+        console.log(score);
     })
+
 
     end.addEventListener('mouseover', function () {
         if (eventListener) {
@@ -50,16 +52,14 @@ onload = (event) => {
     })
 
     start.addEventListener('click', function () {
+        score = 0
         on = true
         status.innerHTML = 'Begin by moving your mouse over the "S".'
         example.innerHTML = ""
         boundary.forEach(item => {
             item.style.backgroundColor = "#eeeeee"
+            item.style.color = "black"
+            example.style.textAlign = "center"
         })
     })
-
-
-
-
-
 }
