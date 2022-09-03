@@ -3,9 +3,10 @@ addEventListener('load', (event) => { });
 let score = 0
 let on = false;
 let eventListener = false;
+let backgroundColor = false;
 
 onload = (event) => {
-    console.log("Test");
+    // console.log("Test");
     const start = document.getElementById('start')
     const end = document.getElementById('end')
     const status = document.getElementById('status');
@@ -17,16 +18,24 @@ onload = (event) => {
         eventListener = true
         console.log(on);
         console.log(score);
+        example.style.color = "black"
+        if (!backgroundColor) {
+            boundary.forEach(item => {
+                item.style.backgroundColor = "#eeeeee"
+            })
+        }
     })
 
 
     end.addEventListener('mouseover', function () {
         if (eventListener) {
-            console.log(event);
             on = false
-            console.log(on);
             score += 5;
             example.innerHTML = "Score: " + score
+            example.style.color = "black"
+            example.style.textAlign = "center"
+            status.innerHTML = "You won"
+            console.log(on);
             console.log(score);
         }
         eventListener = false
@@ -39,13 +48,15 @@ onload = (event) => {
             }
             boundary.forEach(item => {
                 if (on) {
-                    item.style.backgroundColor = "red"
+                    // item.classList.remove("boundary")
+                    item.style.backgroundColor = ""
+                    item.classList.add("youlose")
                     status.innerHTML = "You lost"
                     example.innerHTML = "Score: " + score
                     example.style.color = "White"
                     example.style.textAlign = "center"
-                    console.log(score);
                     eventListener = false
+                    console.log(score);
                 }
             })
         })
@@ -58,8 +69,6 @@ onload = (event) => {
         example.innerHTML = ""
         boundary.forEach(item => {
             item.style.backgroundColor = "#eeeeee"
-            item.style.color = "black"
-            example.style.textAlign = "center"
         })
     })
 }
