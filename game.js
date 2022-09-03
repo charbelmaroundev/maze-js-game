@@ -90,6 +90,7 @@
 
 addEventListener('load', (event) => { });
 
+let score = 0
 let on = false
 
 onload = (event) => {
@@ -98,26 +99,39 @@ onload = (event) => {
     const end = document.getElementById('end')
     const status = document.getElementById('status');
     const boundary = document.querySelectorAll('.boundary');
+    const example = document.querySelector('.example');
     // console.log(start, end, status, boundary);
     start.addEventListener('mouseover', function () {
         on = true
         console.log(on);
-        boundary.forEach(item => {
-            item.addEventListener("mouseover", function () {
-                boundary.forEach(item => {
-                    if (on) {
-                        item.style.backgroundColor = "red"
-                    }
-                })
-            })
-        })
     })
-
-
 
     end.addEventListener('mouseover', function () {
         on = false
         console.log(on);
+    })
+
+    boundary.forEach(item => {
+        item.addEventListener("mouseover", function () {
+            boundary.forEach(item => {
+                if (on) {
+                    item.style.backgroundColor = "red"
+                    status.innerHTML = "You lost"
+                    example.innerHTML = "Score: " + score
+                    example.style.color = "White"
+                    example.style.textAlign = "center"
+                }
+            })
+        })
+    })
+
+    start.addEventListener('click', function () {
+        on = true
+        status.innerHTML = 'Begin by moving your mouse over the "S".'
+        example.innerHTML = ""
+        boundary.forEach(item => {
+            item.style.backgroundColor = "#eeeeee"
+        })
     })
 
 
