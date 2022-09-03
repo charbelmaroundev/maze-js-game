@@ -90,6 +90,8 @@
 
 addEventListener('load', (event) => { });
 
+let on = false
+
 onload = (event) => {
     console.log("Test");
     const start = document.getElementById('start')
@@ -98,6 +100,34 @@ onload = (event) => {
     const boundary = document.querySelectorAll('.boundary');
     // console.log(start, end, status, boundary);
     start.addEventListener('mouseover', function () {
-        console.log("Start");
+        on = true
+        console.log(on);
     })
+
+    end.addEventListener('mouseover', function () {
+        on = false
+        console.log(on);
+    })
+
+    boundary.forEach(item => {
+        item.addEventListener("mouseover", function () {
+            boundary.forEach(item => {
+                item.style.backgroundColor = "red"
+            })
+        })
+    })
+
+
+
+
+
 }
+
+
+
+// if (on) {
+//     boundary.forEach(item => {
+//         console.log(item);
+//         item.addEventListener("mouseover", redBorder)
+//     })
+// }
