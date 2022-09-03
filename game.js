@@ -102,20 +102,36 @@ onload = (event) => {
     start.addEventListener('mouseover', function () {
         on = true
         console.log(on);
+        boundary.forEach(item => {
+            item.addEventListener("mouseover", function () {
+                boundary.forEach(item => {
+                    if (on) {
+                        item.style.backgroundColor = "red"
+                    }
+                })
+            })
+        })
     })
+
+
 
     end.addEventListener('mouseover', function () {
         on = false
         console.log(on);
     })
 
-    boundary.forEach(item => {
-        item.addEventListener("mouseover", function () {
-            boundary.forEach(item => {
-                item.style.backgroundColor = "red"
-            })
-        })
-    })
+
+
+
+
+    // console.log(on);
+
+    // if (on) {
+    //     console.log("Trueeee");
+    // }
+
+
+
 
 
 
