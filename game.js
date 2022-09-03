@@ -1,74 +1,86 @@
 addEventListener('load', (event) => { });
 
+// VARIEBBLES
 let score = 0
-let on = false;
+let gameStart = false;
 let eventListener = false;
-let backgroundColor = false;
+let gameOver = false
+let out = true
 
 onload = (event) => {
-    // console.log("Test");
-    const start = document.getElementById('start')
-    const end = document.getElementById('end')
-    const status = document.getElementById('status');
-    const boundary = document.querySelectorAll('.boundary');
-    const example = document.querySelector('.example');
-    // console.log(start, end, status, boundary);
-    start.addEventListener('mouseover', function () {
-        on = true
-        eventListener = true
-        console.log(on);
-        console.log(score);
-        example.style.color = "black"
-        if (!backgroundColor) {
-            boundary.forEach(item => {
-                item.style.backgroundColor = "#eeeeee"
+
+    // ELEMENTS
+    const endEl = document.getElementById('end')
+    const gameEl = document.getElementById('game')
+    const startEL = document.getElementById('start')
+    const statusEL = document.getElementById('status');
+    const exampleEl = document.querySelector('.example');
+    const boundaryEL = document.querySelectorAll('.boundary');
+
+    gameEl.addEventListener('mouseleave', () => {
+        if (eventListener) {
+            gameStart = false
+            endEl.removeEventListener('mouseover', endFun)
+            boundaryEL.forEach(item => {
+                item.removeEventListener("mouseover", boundaryFun)
             })
         }
     })
 
+    startHover = () => {
+        gameStart = true
+        eventListener = true
+        exampleEl.style.color = "black"
+        if (!gameOver) {
+            boundaryEL.forEach(item => {
+                item.classList.remove("youlose")
 
-    end.addEventListener('mouseover', function () {
+            })
+            if (gameStart) {
+                endEl.addEventListener('mouseover', endFun)
+                boundaryEL.forEach(item => {
+                    item.addEventListener("mouseover", boundaryFun)
+                })
+            }
+        }
+    }
+
+    startClick = () => {
+        score = 0
+        gameStart = true
+        exampleEl.innerHTML = ""
+        statusEL.innerHTML = 'Begin by moving your mouse over the "S".'
+    }
+
+    endFun = () => {
         if (eventListener) {
-            on = false
             score += 5;
-            example.innerHTML = "Score: " + score
-            example.style.color = "black"
-            example.style.textAlign = "center"
-            status.innerHTML = "You won"
-            console.log(on);
-            console.log(score);
+            gameStart = !gameStart
+            statusEL.innerHTML = "You won"
+            exampleEl.style.color = "black"
+            exampleEl.style.textAlign = "center"
+            exampleEl.innerHTML = "Score: " + score
         }
         eventListener = false
-    })
+    }
 
-    boundary.forEach(item => {
-        item.addEventListener("mouseover", function () {
-            if (eventListener) {
-                score -= 10
+    boundaryFun = () => {
+        if (eventListener) {
+            score -= 10
+        }
+        boundaryEL.forEach(item => {
+            if (gameStart) {
+                eventListener = false
+                item.classList.add("youlose")
+                item.style.backgroundColor = ""
+                statusEL.innerHTML = "You lost"
+                exampleEl.style.color = "White"
+                exampleEl.style.textAlign = "center"
+                exampleEl.innerHTML = "Score: " + score
             }
-            boundary.forEach(item => {
-                if (on) {
-                    // item.classList.remove("boundary")
-                    item.style.backgroundColor = ""
-                    item.classList.add("youlose")
-                    status.innerHTML = "You lost"
-                    example.innerHTML = "Score: " + score
-                    example.style.color = "White"
-                    example.style.textAlign = "center"
-                    eventListener = false
-                    console.log(score);
-                }
-            })
         })
-    })
+    }
 
-    start.addEventListener('click', function () {
-        score = 0
-        on = true
-        status.innerHTML = 'Begin by moving your mouse over the "S".'
-        example.innerHTML = ""
-        boundary.forEach(item => {
-            item.style.backgroundColor = "#eeeeee"
-        })
-    })
+    startEL.addEventListener('click', startClick)
+    startEL.addEventListener('mouseover', startHover)
 }
