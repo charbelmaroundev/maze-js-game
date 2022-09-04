@@ -1,6 +1,14 @@
-addEventListener('load', (event) => { });
+//////////////////////////////////////////////
+// I KNOW MY CODE ISN'T CLEAR AND DIVIDED 
+// TOO MUCH, BUT I DON'T  HAVE TIME FOR THAT.
+// AND I THINK IT'S FREE FROM BUGS.
+// I HOPE THAT :)
+//////////////////////////////////////////////
 
+
+//////////////////////////////////////////////
 // VARIEBBLES
+//////////////////////////////////////////////
 let score = 0
 let gameStart = false;
 let eventListener = false;
@@ -10,10 +18,15 @@ let userName = ""
 let level = 0
 let timer = 60
 
+
+//////////////////////////////////////////////
+// FUNCTION TO LOAD HTML BEFORE JAVASCRIPT
+//////////////////////////////////////////////
 onload = (event) => {
 
-
+    //////////////////////////////////////////////
     // ELEMENTS
+    //////////////////////
     const endEl = document.getElementById('end')
     const gameEl = document.getElementById('game')
     const startEL = document.getElementById('start')
@@ -22,6 +35,10 @@ onload = (event) => {
     const boundaryEL = document.querySelectorAll('.boundary');
     const timmerEl = document.querySelector("#game div.boundary + div.boundary");
 
+
+    //////////////////////////////////////////////
+    // CREATE SAVE BUTTON
+    //////////////////////////////////////////////
     let div = document.createElement("Button");
     div.style.display = "Block"
     div.style.border = "1px solid Black"
@@ -34,20 +51,26 @@ onload = (event) => {
     document.querySelector("p").appendChild(div);
     const saveEl = document.querySelector("p")
 
+
+    //////////////////////////////////////////////
+    // TIMER
+    //////////////////////////////////////////////
     let counter = 60 / (level + 1);
     let interval = setInterval(() => {
         counter--;
     }, 1000);
 
-    function myStopFunction() {
+    function stopTimer() {
         clearTimeout(interval);
     }
 
 
+    //////////////////////////////////////////////
+    // GREETING FUNCTION
+    //////////////////////////////////////////////
     function greetMessage() {
         let text;
         userName = prompt("Please enter your username: ", "Here...");
-        //userName = "Charbel"
         if (userName == null || userName == "" || userName == "Here...") {
             userName = "Unknown";
 
@@ -63,12 +86,13 @@ onload = (event) => {
     greetMessage()
 
 
-
+    //////////////////////////////////////////////
+    // SAVE ON CLICK FUNCTION
+    //////////////////////////////////////////////
     saveEl.addEventListener('click', () => {
         localStorage.setItem(userName, score);
         text = "Hello " + userName + "! Your level is " + level;
     })
-
 
     gameEl.addEventListener('mouseleave', () => {
         if (eventListener) {
@@ -79,19 +103,20 @@ onload = (event) => {
             })
         }
     })
-
-
     timmerEl.style.textAlign = "center"
 
-    startHover = () => {
 
-        myStopFunction()
+    //////////////////////////////////////////////
+    // START ON HOVER FUNCTION
+    //////////////////////////////////////////////
+    startHover = () => {
+        stopTimer()
         let counter = 60 / (level + 1);
         interval = setInterval(() => {
             counter--;
             document.querySelector("#game div.boundary + div.boundary").innerHTML = "TIMER: " + Math.floor(counter)
             if (counter <= 0) {
-                myStopFunction();
+                stopTimer();
                 boundaryFun()
             }
         }, 1000);
@@ -101,10 +126,10 @@ onload = (event) => {
         timmerEl.innerHTML = ""
         exampleEl.style.color = "black"
         level = Math.floor(score / 10) + 1
+
         if (!gameOver) {
             boundaryEL.forEach(item => {
                 item.classList.remove("youlose")
-
             })
             if (gameStart) {
                 endEl.addEventListener('mouseover', endFun)
@@ -115,17 +140,23 @@ onload = (event) => {
         }
     }
 
-    startClick = () => {
 
+    //////////////////////////////////////////////
+    // RESET FOR THE TIMER
+    //////////////////////////////////////////////
+    startClick = () => {
         score = 0
         gameStart = true
         exampleEl.innerHTML = ""
-        // startTimer(timer, timmerEl)
         level = Math.floor(score / 10) + 1
         statusEL.innerHTML = 'Begin by moving your mouse over the "S".'
         document.querySelector("h1").innerHTML = "Hello " + userName + "! Your level is " + level;
     }
 
+
+    //////////////////////////////////////////////
+    // END ON HOVER FUNCTION
+    //////////////////////////////////////////////
     endFun = () => {
         if (eventListener) {
             score += 5;
@@ -140,13 +171,18 @@ onload = (event) => {
         eventListener = false
     }
 
+
+    //////////////////////////////////////////////
+    // FUNCTION TO CHANGE THE DISPLAY FOR BOUNDARIES
+    //////////////////////////////////////////////
     boundaryFun = () => {
         if (eventListener) {
             score -= 10
         }
+
         boundaryEL.forEach(item => {
             if (gameStart) {
-                myStopFunction()
+                stopTimer()
                 eventListener = false
                 item.classList.add("youlose")
                 item.style.backgroundColor = ""
@@ -157,6 +193,7 @@ onload = (event) => {
             }
         })
     }
+
 
     startEL.addEventListener('click', startClick)
     startEL.addEventListener('mouseover', startHover)
