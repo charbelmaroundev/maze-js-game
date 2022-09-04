@@ -24,6 +24,7 @@ onload = (event) => {
 
 
 
+
     let div = document.createElement("Button");
     div.style.display = "Block"
     div.style.border = "1px solid Black"
@@ -39,15 +40,14 @@ onload = (event) => {
 
 
 
-    timmerEl.style.textAlign = "center"
-    timmerEl.style.padding = "0.2rem 0"
+
 
 
 
 
     let counter = 60 / (level + 1);
     let interval = setInterval(() => {
-        console.log(counter);
+        // console.log(counter);
         counter--;
 
         if (counter < 0) {
@@ -63,6 +63,12 @@ onload = (event) => {
     function myStopFunction() {
         clearTimeout(interval);
     }
+
+
+
+
+
+
 
 
 
@@ -104,6 +110,19 @@ onload = (event) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     gameEl.addEventListener('mouseleave', () => {
         if (eventListener) {
             gameStart = false
@@ -114,18 +133,27 @@ onload = (event) => {
         }
     })
 
+
+
+    timmerEl.style.textAlign = "center"
+
+
     startHover = () => {
 
 
 
 
+        // document.querySelector("#game div.boundary + div.boundary").innerHTML = "TIMER: " + counter
 
         myStopFunction()
         let counter = 60 / (level + 1);
         interval = setInterval(() => {
-            console.log(counter);
+
+
+            // console.log(counter);
             counter--;
 
+            document.querySelector("#game div.boundary + div.boundary").innerHTML = "TIMER: " + counter
             if (counter < 0) {
                 clearInterval(interval);
                 console.log('Ding!');
@@ -135,13 +163,20 @@ onload = (event) => {
 
 
 
+        // timmerEl.style.padding = "0.2rem 0"
 
+
+
+
+
+        // console.log(level);
         gameStart = true
         eventListener = true
         timmerEl.innerHTML = ""
+        // startTimer(timer, timmerEl)
         exampleEl.style.color = "black"
         level = Math.floor(score / 10) + 1
-        document.querySelector("h1").innerHTML = "Hello " + userName + "! Your level is " + level;
+        // document.querySelector("h1").innerHTML = "Hello " + userName + "! Your level is " + level;
         if (!gameOver) {
             boundaryEL.forEach(item => {
                 item.classList.remove("youlose")
@@ -161,6 +196,7 @@ onload = (event) => {
         score = 0
         gameStart = true
         exampleEl.innerHTML = ""
+        // startTimer(timer, timmerEl)
         level = Math.floor(score / 10) + 1
         statusEL.innerHTML = 'Begin by moving your mouse over the "S".'
         document.querySelector("h1").innerHTML = "Hello " + userName + "! Your level is " + level;
@@ -174,6 +210,7 @@ onload = (event) => {
 
             score += 5;
             gameStart = !gameStart
+            // startTimer(timer, timmerEl)
             statusEL.innerHTML = "You won"
             exampleEl.style.color = "black"
             level = Math.floor(score / 10) + 1
@@ -190,6 +227,7 @@ onload = (event) => {
         }
         boundaryEL.forEach(item => {
             if (gameStart) {
+                myStopFunction()
                 eventListener = false
                 item.classList.add("youlose")
                 item.style.backgroundColor = ""
