@@ -22,9 +22,6 @@ onload = (event) => {
     const boundaryEL = document.querySelectorAll('.boundary');
     const timmerEl = document.querySelector("#game div.boundary + div.boundary");
 
-
-
-
     let div = document.createElement("Button");
     div.style.display = "Block"
     div.style.border = "1px solid Black"
@@ -37,42 +34,14 @@ onload = (event) => {
     document.querySelector("p").appendChild(div);
     const saveEl = document.querySelector("p")
 
-
-
-
-
-
-
-
-
     let counter = 60 / (level + 1);
     let interval = setInterval(() => {
-        // console.log(counter);
         counter--;
-
-        if (counter < 0) {
-            clearInterval(interval);
-            console.log('Ding!');
-        }
     }, 1000);
-
-
-
-
 
     function myStopFunction() {
         clearTimeout(interval);
     }
-
-
-
-
-
-
-
-
-
-
 
 
     function greetMessage() {
@@ -84,11 +53,9 @@ onload = (event) => {
 
         } else {
             score = Number(localStorage.getItem(userName));
-            // console.log(score);
             level = Math.floor(score / 10) + 1
             text = "Hello " + userName + "! Your level is " + level;
             document.querySelector('.example').innerHTML = "Score: " + score
-            //console.log(level);
             exampleEl.style.textAlign = "center"
         }
         document.querySelector("h1").innerHTML = text;
@@ -103,26 +70,6 @@ onload = (event) => {
     })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     gameEl.addEventListener('mouseleave', () => {
         if (eventListener) {
             gameStart = false
@@ -134,49 +81,26 @@ onload = (event) => {
     })
 
 
-
     timmerEl.style.textAlign = "center"
 
-
     startHover = () => {
-
-
-
-
-        // document.querySelector("#game div.boundary + div.boundary").innerHTML = "TIMER: " + counter
 
         myStopFunction()
         let counter = 60 / (level + 1);
         interval = setInterval(() => {
-
-
-            // console.log(counter);
             counter--;
-
-            document.querySelector("#game div.boundary + div.boundary").innerHTML = "TIMER: " + counter
-            if (counter < 0) {
-                clearInterval(interval);
-                console.log('Ding!');
+            document.querySelector("#game div.boundary + div.boundary").innerHTML = "TIMER: " + Math.floor(counter)
+            if (counter <= 0) {
+                myStopFunction();
+                boundaryFun()
             }
         }, 1000);
 
-
-
-
-        // timmerEl.style.padding = "0.2rem 0"
-
-
-
-
-
-        // console.log(level);
         gameStart = true
         eventListener = true
         timmerEl.innerHTML = ""
-        // startTimer(timer, timmerEl)
         exampleEl.style.color = "black"
         level = Math.floor(score / 10) + 1
-        // document.querySelector("h1").innerHTML = "Hello " + userName + "! Your level is " + level;
         if (!gameOver) {
             boundaryEL.forEach(item => {
                 item.classList.remove("youlose")
@@ -204,13 +128,8 @@ onload = (event) => {
 
     endFun = () => {
         if (eventListener) {
-
-
-
-
             score += 5;
             gameStart = !gameStart
-            // startTimer(timer, timmerEl)
             statusEL.innerHTML = "You won"
             exampleEl.style.color = "black"
             level = Math.floor(score / 10) + 1
