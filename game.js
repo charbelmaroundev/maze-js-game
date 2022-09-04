@@ -6,8 +6,12 @@ let gameStart = false;
 let eventListener = false;
 let gameOver = false
 let out = true
+let userName = ""
+let level = 0
+let timer = 6000
 
 onload = (event) => {
+
 
     // ELEMENTS
     const endEl = document.getElementById('end')
@@ -16,6 +20,98 @@ onload = (event) => {
     const statusEL = document.getElementById('status');
     const exampleEl = document.querySelector('.example');
     const boundaryEL = document.querySelectorAll('.boundary');
+
+
+
+    let div = document.createElement("Button");
+    div.style.display = "Block"
+    div.style.border = "1px solid Black"
+    div.style.margin = "1rem 0"
+    div.style.textAlign = "center"
+    div.style.width = "50px";
+    div.style.height = "20px";
+    div.style.background = "#eeeeee";
+    div.innerHTML = "Save";
+    document.querySelector("p").appendChild(div);
+    const saveEl = document.querySelector("p")
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function greetMessage() {
+        let text;
+        userName = prompt("Please enter your username: ", "Here...");
+        //userName = "Charbel"
+        if (userName == null || userName == "" || userName == "Here...") {
+            userName = "Unknown";
+
+        } else {
+            score = Number(localStorage.getItem(userName));
+            // console.log(score);
+            level = Math.floor(score / 10) + 1
+            text = "Hello " + userName + "! Your level is " + level;
+            document.querySelector('.example').innerHTML = "Score: " + score
+            //console.log(level);
+            exampleEl.style.textAlign = "center"
+        }
+        document.querySelector("h1").innerHTML = text;
+    }
+    greetMessage()
+
+
+
+    saveEl.addEventListener('click', () => {
+        localStorage.setItem(userName, score);
+        text = "Hello " + userName + "! Your level is " + level;
+    })
+    // console.log(score);
+
+
+    // level = score % 2;
+
+
+
+
+    // setTimeout(() => {
+    //     console.log("Delayed for 1 second.");
+    // }, "1000")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     gameEl.addEventListener('mouseleave', () => {
         if (eventListener) {
@@ -28,9 +124,12 @@ onload = (event) => {
     })
 
     startHover = () => {
+        console.log(level);
         gameStart = true
         eventListener = true
         exampleEl.style.color = "black"
+        level = Math.floor(score / 10) + 1
+        document.querySelector("h1").innerHTML = "Hello " + userName + "! Your level is " + level;
         if (!gameOver) {
             boundaryEL.forEach(item => {
                 item.classList.remove("youlose")
@@ -49,7 +148,9 @@ onload = (event) => {
         score = 0
         gameStart = true
         exampleEl.innerHTML = ""
+        level = Math.floor(score / 10) + 1
         statusEL.innerHTML = 'Begin by moving your mouse over the "S".'
+        document.querySelector("h1").innerHTML = "Hello " + userName + "! Your level is " + level;
     }
 
     endFun = () => {
@@ -58,8 +159,10 @@ onload = (event) => {
             gameStart = !gameStart
             statusEL.innerHTML = "You won"
             exampleEl.style.color = "black"
+            level = Math.floor(score / 10) + 1
             exampleEl.style.textAlign = "center"
             exampleEl.innerHTML = "Score: " + score
+            document.querySelector("h1").innerHTML = "Hello " + userName + "! Your level is " + level;
         }
         eventListener = false
     }
