@@ -8,7 +8,7 @@ let gameOver = false
 let out = true
 let userName = ""
 let level = 0
-let timer = 6000
+let timer = 60
 
 onload = (event) => {
 
@@ -20,6 +20,7 @@ onload = (event) => {
     const statusEL = document.getElementById('status');
     const exampleEl = document.querySelector('.example');
     const boundaryEL = document.querySelectorAll('.boundary');
+    const timmerEl = document.querySelector("#game div.boundary + div.boundary");
 
 
 
@@ -38,13 +39,36 @@ onload = (event) => {
 
 
 
+    timmerEl.style.textAlign = "center"
+    timmerEl.style.padding = "0.2rem 0"
 
 
 
 
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
 
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
 
+            display.textContent = "TIMER: " + minutes + ":" + seconds;
 
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }
+
+    window.onload = function () {
+        var fiveMinutes = 60 * 5,
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+    };
+
+    startTimer(timer, timmerEl)
 
 
     function greetMessage() {
