@@ -45,30 +45,28 @@ onload = (event) => {
 
 
 
-    function startTimer(duration, display) {
-        var timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
+    let counter = 60 / (level + 1);
+    let interval = setInterval(() => {
+        console.log(counter);
+        counter--;
 
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
+        if (counter < 0) {
+            clearInterval(interval);
+            console.log('Ding!');
+        }
+    }, 1000);
 
-            display.textContent = "TIMER: " + minutes + ":" + seconds;
 
-            if (--timer < 0) {
-                timer = duration;
-            }
-        }, 1000);
+
+
+
+    function myStopFunction() {
+        clearTimeout(interval);
     }
 
-    window.onload = function () {
-        var fiveMinutes = 60 * 5,
-            display = document.querySelector('#time');
-        startTimer(fiveMinutes, display);
-    };
 
-    startTimer(timer, timmerEl)
+
+
 
 
     function greetMessage() {
@@ -97,37 +95,6 @@ onload = (event) => {
         localStorage.setItem(userName, score);
         text = "Hello " + userName + "! Your level is " + level;
     })
-    // console.log(score);
-
-
-    // level = score % 2;
-
-
-
-
-    // setTimeout(() => {
-    //     console.log("Delayed for 1 second.");
-    // }, "1000")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -148,9 +115,30 @@ onload = (event) => {
     })
 
     startHover = () => {
-        console.log(level);
+
+
+
+
+
+        myStopFunction()
+        let counter = 60 / (level + 1);
+        interval = setInterval(() => {
+            console.log(counter);
+            counter--;
+
+            if (counter < 0) {
+                clearInterval(interval);
+                console.log('Ding!');
+            }
+        }, 1000);
+
+
+
+
+
         gameStart = true
         eventListener = true
+        timmerEl.innerHTML = ""
         exampleEl.style.color = "black"
         level = Math.floor(score / 10) + 1
         document.querySelector("h1").innerHTML = "Hello " + userName + "! Your level is " + level;
@@ -169,6 +157,7 @@ onload = (event) => {
     }
 
     startClick = () => {
+
         score = 0
         gameStart = true
         exampleEl.innerHTML = ""
@@ -179,6 +168,10 @@ onload = (event) => {
 
     endFun = () => {
         if (eventListener) {
+
+
+
+
             score += 5;
             gameStart = !gameStart
             statusEL.innerHTML = "You won"
